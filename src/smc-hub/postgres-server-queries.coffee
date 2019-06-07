@@ -390,7 +390,7 @@ exports.extend_PostgreSQL = (ext) -> class PostgreSQL extends ext
         )
 
     ###
-    Add all public projcets to user via account_id, public_share Table required
+    Add all public projcets to user via account_id, projects_public  Table required
     ###
     add_public_projects: (opts) =>
         opts = defaults opts,
@@ -404,8 +404,8 @@ exports.extend_PostgreSQL = (ext) -> class PostgreSQL extends ext
                         group: 'collaborator'
             where : 'project_id IN (
                         SELECT projects.project_id 
-                        FROM projects, public_share 
-                        WHERE projects.project_id = public_share.project_id
+                        FROM projects, projects_public  
+                        WHERE projects.project_id = projects_public.project_id
                     )'
             cb    : opts.cb
 
@@ -418,7 +418,7 @@ exports.extend_PostgreSQL = (ext) -> class PostgreSQL extends ext
             query : 'SELECT accounts_public.email_address, accounts_public.password ' +
                         'FROM accounts_public, accounts ' +
                         'WHERE accounts_public.account_id = accounts.account_id ' +
-                        'ORDER BY random() ' +                        
+                        'ORDER BY random() ' + 
                         'LIMIT 1'
             cb    : one_result(['email_address', 'password'], opts.cb) 
 

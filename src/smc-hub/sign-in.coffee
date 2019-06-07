@@ -243,7 +243,7 @@ exports.guest_sign_in = (opts) ->
 
 # #     get guest account
     dbg("guest_sign_in start")
-
+    
     async.series([
         (cb) =>
             dbg("get random guest account")
