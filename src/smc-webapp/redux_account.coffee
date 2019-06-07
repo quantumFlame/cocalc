@@ -92,6 +92,37 @@ class AccountActions extends Actions
                         # should never ever happen
                         @setState(sign_in_error : "The server responded with invalid message when signing in: #{JSON.stringify(mesg)}")
 
+    guest_sign_in: =>
+        doc_conn = '[connectivity debugging tips](https://doc.cocalc.com/howto/connectivity-issues.html)'
+        err_help = """
+                   Please reload this browser tab and try again.
+                   If that doesn't work after a few minutes, try these #{doc_conn} or email #{help()}.
+                   """
+
+        @setState(signing_in: true)
+        webapp_client.guest_sign_in
+            remember_me   : true
+            timeout       : 30
+            utm           : get_utm()
+            referrer      : get_referrer()
+            get_api_key   : redux.getStore('page')?.get('get_api_key')
+            cb            : (error, mesg) =>
+                @setState(signing_in: false)
+                if error
+                    @setState(sign_in_error : "There was an error signing you in (#{error}). #{err_help}")
+                    return
+                switch mesg.event
+                    when 'sign_in_failed'
+                        @setState(sign_in_error : mesg.reason)
+                    when 'signed_in'
+                        #redux.getActions('page').set_active_tab('projects')
+                        break
+                    when 'error'
+                        @setState(sign_in_error : mesg.reason)
+                    else
+                        # should never ever happen
+                        @setState(sign_in_error : "The server responded with invalid message when signing in: #{JSON.stringify(mesg)}")
+
     create_account: (first_name, last_name, email, password, token, usage_intent) =>
         @setState(signing_up: true)
         webapp_client.create_account

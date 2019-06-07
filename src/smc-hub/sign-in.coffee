@@ -222,6 +222,53 @@ exports.sign_in = (opts) ->
             opts.cb?()
     )
 
+
+exports.guest_sign_in = (opts) ->
+    {client, mesg} = opts = defaults opts,
+        client   : required
+        mesg     : required
+        logger   : undefined
+        database : required
+        host     : undefined
+        port     : undefined
+        cb       : undefined
+    
+    if opts.logger?
+        dbg = (m) ->
+            opts.logger.debug("guest_sign_in: #{m}")
+        dbg()
+    else
+        dbg = ->
+    tm = misc.walltime()
+
+# #     get guest account
+    dbg("guest_sign_in start")
+
+    async.series([
+        (cb) =>
+            dbg("get random guest account")
+            opts.database.get_guest_account
+                cb       : (err, x) ->
+                    if not err
+                        mesg.email_address = x.email_address   
+                        mesg.password = x.password
+                        cb()
+                    else
+                        cb?(err)
+        (cb) =>
+            dbg("sign in with guest account")
+            opts.logger.debug(opts.mesg)
+            exports.sign_in
+                client   : opts.client
+                mesg     : opts.mesg
+                logger   : opts.logger
+                database : opts.database
+                host     : opts.host
+                port     : opts.port
+                cb       : cb
+    ], opts.cb)
+
+
 exports.sign_in_using_auth_token = (opts) ->
     {client, mesg} = opts = defaults opts,
         client   : required

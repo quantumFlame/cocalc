@@ -61,6 +61,10 @@ export class SignIn extends React.Component<Props, State> {
     );
   }
 
+  guest_sign_in(): void {
+   actions("account").guest_sign_in();
+  }
+
   display_forgot_password(): void {
     actions("account").setState({ show_forgot_password: true });
   }
@@ -105,6 +109,10 @@ export class SignIn extends React.Component<Props, State> {
     });
   }
 
+  guest_login_size(): string {
+      return "12pt";
+  }
+
   forgot_font_size(): string {
     if (this.props.sign_in_error != null) {
       return "16pt";
@@ -140,6 +148,21 @@ export class SignIn extends React.Component<Props, State> {
                 onChange={this.remove_error}
               />
             </FormGroup>
+          </Row>
+          <Row>
+            <div style={{ marginTop: "1ex" }}>
+              <a
+                onClick={this.guest_sign_in}
+                style={{
+                  color: this.props.color,
+                  cursor: "pointer",
+                  fontSize: this.guest_login_size(),
+                  fontStyle: "italic"
+                }}
+              >
+                Sign in as a guest?
+              </a>
+            </div>
           </Row>
           <Row>
             <div style={{ marginTop: "1ex" }}>
@@ -218,19 +241,30 @@ export class SignIn extends React.Component<Props, State> {
             </Col>
           </Row>
           <Row>
-            <Col xs={7} xsOffset={5} style={{ paddingLeft: 15 }}>
-              <div style={{ marginTop: "1ex" }}>
-                <a
-                  onClick={this.display_forgot_password}
-                  style={{
-                    color: this.props.color,
-                    cursor: "pointer",
-                    fontSize: this.forgot_font_size()
-                  }}
-                >
-                  Forgot Password?
-                </a>
-              </div>
+            <Col xs={5} style={{ marginTop: "1ex" }}>
+              <a
+                onClick={this.guest_sign_in}
+                style={{
+                color: this.props.color,
+                cursor: "pointer",
+                fontSize: this.guest_login_size(),
+                fontStyle: "italic"
+              }}
+              >
+                Sign in as a guest?
+              </a>
+            </Col>          
+            <Col xs={7} style={{ marginTop: "1ex" }}>
+              <a
+                onClick={this.display_forgot_password}
+                style={{
+                  color: this.props.color,
+                  cursor: "pointer",
+                  fontSize: this.forgot_font_size()
+                }}
+              >
+                Forgot Password?
+              </a>
             </Col>
           </Row>
           <Row>

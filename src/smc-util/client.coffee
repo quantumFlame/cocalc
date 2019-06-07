@@ -918,6 +918,31 @@ class exports.Connection extends EventEmitter
             timeout : opts.timeout
             cb      : opts.cb
 
+    guest_sign_in: (opts) ->
+        opts = defaults opts,
+            email_address : undefined
+            password      : undefined
+            remember_me   : false
+            cb            : required
+            timeout       : 40
+            utm           : undefined
+            referrer      : undefined
+            get_api_key   : undefined       # if given, will create/get api token in response message
+
+        mesg = message.guest_sign_in
+                email_address : opts.email_address
+                password      : opts.password
+                remember_me   : opts.remember_me
+                utm           : opts.utm
+                referrer      : opts.referrer
+                get_api_key   : opts.get_api_key
+
+        @call
+            allow_post : false
+            message : mesg
+            timeout : opts.timeout
+            cb      : opts.cb        
+
     delete_remember_me_cookie: (cb) =>
         # This actually sets the content of the cookie to empty.
         # (I just didn't implement a delete action on the backend yet.)

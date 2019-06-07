@@ -517,6 +517,18 @@ message({
   get_api_key: undefined
 }); // same as for create_account
 
+// client --> hub
+message({
+  id: undefined,
+  event: "guest_sign_in",
+  email_address: undefined,
+  password: undefined,
+  remember_me: false,
+  utm: undefined,
+  referrer: undefined,
+  get_api_key: undefined
+}); // same as for create_account
+
 message({
   id: undefined,
   event: "sign_in_using_auth_token",

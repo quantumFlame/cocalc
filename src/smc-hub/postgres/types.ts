@@ -112,6 +112,15 @@ export interface PostgreSQL extends EventEmitter {
     cb: Function;
   }): void;
 
+  add_public_projects(opts: {
+    account_id: string;
+    cb: Function;
+  }): void;
+
+  get_guest_account(opts: {
+    cb: Function;
+  }): void;
+
   log(opts: { event: string; value: any; cb: Function }): void;
 
   user_is_in_group(opts: {

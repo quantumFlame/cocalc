@@ -389,6 +389,40 @@ exports.extend_PostgreSQL = (ext) -> class PostgreSQL extends ext
                 opts.cb(undefined, account_id)
         )
 
+    ###
+    Add all public projcets to user via account_id, public_share Table required
+    ###
+    add_public_projects: (opts) =>
+        opts = defaults opts,
+            account_id : required
+            cb         : required
+        @_query
+            query : 'UPDATE projects'
+            jsonb_merge :
+                users   :
+                    "#{opts.account_id}":
+                        group: 'collaborator'
+            where : 'project_id IN (
+                        SELECT projects.project_id 
+                        FROM projects, public_share 
+                        WHERE projects.project_id = public_share.project_id
+                    )'
+            cb    : opts.cb
+
+
+    # return a guest account randomly
+    get_guest_account: (opts) =>
+        opts = defaults opts,
+            cb            : required    # cb(err, true if banned; false if not banned)
+        @_query
+            query : 'SELECT accounts_public.email_address, accounts_public.password ' +
+                        'FROM accounts_public, accounts ' +
+                        'WHERE accounts_public.account_id = accounts.account_id ' +
+                        'ORDER BY random() ' +                        
+                        'LIMIT 1'
+            cb    : one_result(['email_address', 'password'], opts.cb) 
+
+
     is_admin: (opts) =>
         opts = defaults opts,
             account_id : required

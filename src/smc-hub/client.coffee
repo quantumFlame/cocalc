@@ -727,6 +727,15 @@ class exports.Client extends EventEmitter
             host     : @_opts.host
             port     : @_opts.port
 
+    mesg_guest_sign_in: (mesg) =>
+        sign_in.guest_sign_in
+            client   : @
+            mesg     : mesg
+            logger   : @logger
+            database : @database
+            host     : @_opts.host
+            port     : @_opts.port
+
     mesg_sign_in_using_auth_token: (mesg) =>
         sign_in.sign_in_using_auth_token
             client   : @

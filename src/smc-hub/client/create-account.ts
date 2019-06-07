@@ -179,6 +179,12 @@ export async function create_account(
       value: data
     });
 
+    dbg("add public projects to new account");
+    // do not block
+    await callback2(opts.database.add_public_projects, {
+      account_id: account_id
+    });
+
     dbg("check for any account creation actions");
     // do not block
     await callback2(opts.database.do_account_creation_actions, {
