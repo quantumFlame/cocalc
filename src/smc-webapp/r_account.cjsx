@@ -550,10 +550,6 @@ AccountSettings = rclass
                 onClick={=>@actions('account').setState(show_sign_out : true, everywhere : false, sign_out_error:undefined)}>
                 <Icon name='sign-out'/> Sign Out...
             </Button>
-            <Button bsStyle='warning' disabled={@props.show_sign_out and @props.everywhere}
-                onClick={=>@actions('account').setState(show_sign_out : true, everywhere : true, sign_out_error:undefined)}>
-                <Icon name='sign-out'/> Sign Out Everywhere...
-            </Button>
         </ButtonToolbar>
 
     render_sign_in_strategies: ->
@@ -616,18 +612,6 @@ AccountSettings = rclass
                 </Col>
             </Row>
             {@render_sign_out_confirm() if @props.show_sign_out}
-            <Row>
-                <Col xs={12}>
-                    <DeleteAccount
-                        style={marginTop:'1ex'}
-                        initial_click = {=>@setState(show_delete_confirmation:true)}
-                        confirm_click = {=>@actions('account').delete_account()}
-                        cancel_click  = {=>@setState(show_delete_confirmation:false)}
-                        user_name     = {(@props.first_name + ' ' + @props.last_name).trim()}
-                        show_confirmation={@state.show_delete_confirmation}
-                        />
-                </Col>
-            </Row>
             {@render_sign_in_strategies()}
         </Panel>
 

@@ -531,7 +531,6 @@ exports.ProjectPage = ProjectPage = rclass ({name}) ->
                 </div>
                 <div style={borderLeft: '1px solid lightgrey',  display: 'inline-flex'}>
                     {@render_chat_indicator(shrink_fixed_tabs) if not is_public}
-                    {@render_share_indicator(shrink_fixed_tabs) if not is_public}
                 </div>
             </div>
         </div>
@@ -603,6 +602,7 @@ exports.ProjectPage = ProjectPage = rclass ({name}) ->
             {<DeletedProjectWarning /> if project?.get('deleted')}
             {@render_project_content(active_path, group)}
         </div>
+
 
 exports.MobileProjectPage = rclass ({name}) ->
     displayName : 'MobileProjectPage'
