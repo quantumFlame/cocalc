@@ -49,7 +49,7 @@ export class SignUp extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
-      terms_checkbox: false,
+      terms_checkbox: true,
       user_token: ""
     };
   }
@@ -90,7 +90,6 @@ export class SignUp extends React.Component<Props, State> {
           strategies={this.props.strategies}
           get_api_key={this.props.get_api_key}
           style={{ textAlign: "center" }}
-          disabled={!this.state.terms_checkbox}
         />
         Or sign up via email
         <br />
@@ -130,7 +129,6 @@ export class SignUp extends React.Component<Props, State> {
       <FormGroup>
         {this.render_error("first_name")}
         <FormControl
-          disabled={!this.state.terms_checkbox}
           name="first_name"
           ref="first_name"
           type="text"
@@ -147,7 +145,6 @@ export class SignUp extends React.Component<Props, State> {
       <FormGroup>
         {this.render_error("last_name")}
         <FormControl
-          disabled={!this.state.terms_checkbox}
           name="last_name"
           ref="last_name"
           type="text"
@@ -164,7 +161,6 @@ export class SignUp extends React.Component<Props, State> {
       <FormGroup>
         {this.render_error("email_address")}
         <FormControl
-          disabled={!this.state.terms_checkbox}
           name="email"
           ref="email"
           type="email"
@@ -180,7 +176,6 @@ export class SignUp extends React.Component<Props, State> {
       <FormGroup>
         {this.render_error("password")}
         <FormControl
-          disabled={!this.state.terms_checkbox}
           name="password"
           ref="password"
           type="password"
@@ -230,7 +225,7 @@ export class SignUp extends React.Component<Props, State> {
     return (
       <Button
         style={{ marginBottom: UNIT, marginTop: UNIT }}
-        disabled={!this.state.terms_checkbox || this.props.signing_up}
+        disabled={this.props.signing_up}
         bsStyle={"success"}
         bsSize={"large"}
         type={"submit"}
@@ -273,12 +268,7 @@ export class SignUp extends React.Component<Props, State> {
     return (
       <Well style={well_style}>
         <AccountCreationEmailInstructions />
-        {this.render_question()}
-        {this.render_terms()}
         {this.render_creation_form()}
-        <div style={{ textAlign: "center" }}>
-          Email <HelpEmailLink /> if you need help.
-        </div>
       </Well>
     );
   }

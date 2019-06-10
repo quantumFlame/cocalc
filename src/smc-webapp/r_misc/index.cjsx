@@ -182,13 +182,7 @@ exports.Footer = rclass
         <footer style={fontSize:"small",color:"gray",textAlign:"center",padding: "#{2*UNIT}px 0" }>
             <hr/>
             <Space/>
-            <SiteName/> by <CompanyName/>
-            {' '} &middot; {' '}
-            <a target="_blank" rel='noopener' href={PolicyIndexPageUrl}>Policies</a>
-            {' '} &middot; {' '}
-            <a target="_blank" rel='noopener' href={PolicyTOSPageUrl}>Terms of Service</a>
-            {' '} &middot; {' '}
-            <HelpEmailLink />
+            Driven by CoCalc
             {' '} &middot; {' '}
             <span title="Version #{smc_version} @ #{build_date} | #{smc_git_rev[..8]}">&copy; {misc.YEAR}</span>
         </footer>

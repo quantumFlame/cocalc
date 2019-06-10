@@ -419,18 +419,8 @@ exports.LandingPage = rclass
                 </Col>
                 <Col sm={6}>
                     <div style={color:"#666", fontSize:'16pt', marginTop:'5px'}>
-                        Create a new account to the left or sign in with an existing account above.
+                        Create a new account to the left or sign in with an existing/guest account above.
                         <br/>
-                        {@render_trial_info()}
-                        <br/>
-                        {@render_support()}
-                        <br/>
-                        {
-                            if not @props.get_api_key
-                                <div>
-                                    <a href={DOC_URL} target="_blank" rel="noopener">Learn more about CoCalc...</a>
-                                </div>
-                        }
                     </div>
                 </Col>
             </Row>
