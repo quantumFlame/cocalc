@@ -6,7 +6,6 @@ import { List } from "immutable";
 const { COLORS, UNIT, Icon, Loading } = require("../r_misc");
 
 const {
-  HelpEmailLink,
   TermsOfService,
   AccountCreationEmailInstructions
 } = require("../customize");
