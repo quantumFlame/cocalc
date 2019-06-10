@@ -144,6 +144,27 @@ Page = rclass
             show_label     = {@state.show_label}
         />
 
+    render_guest_account_tab: ->
+        if @props.account_id
+            a = <Avatar
+                    size       = {20}
+                    account_id = {@props.account_id}
+                    no_tooltip = {true}
+                    no_loading = {true}
+                    />
+        else
+            a = 'cog'
+
+        <NavTab
+            label          = {'Sign in'}
+            label_class    = {nav_class}
+            icon           = {a}
+            actions        = {@actions('page')}
+            active_top_tab = {@props.active_top_tab}
+            on_click       = {=>window.open('app', '_blank')}
+            show_label     = {@state.show_label}
+        />
+
     render_admin_tab: ->
         <NavTab
             name           = 'admin'
@@ -209,13 +230,13 @@ Page = rclass
             {@render_admin_tab() if logged_in and @props.groups?.includes('admin')}
             {@render_sign_in_tab() if not logged_in}
             <NavTab
-                name           = {'about'}
-                label          = {'CoCalc'}
+                label          = {'Index'}
                 label_class    = {nav_class}
                 icon           = {'info-circle'}
                 inner_style    = {padding: '10px', display: 'flex'}
                 actions        = {@actions('page')}
                 active_top_tab = {@props.active_top_tab}
+                on_click       = {=>window.open('http://www.cooperating.website', '_blank')}
                 show_label     = {@state.show_label}
             />
             <NavItem className='divider-vertical hidden-xs' />
