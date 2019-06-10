@@ -1500,11 +1500,6 @@ exports.ProjectsPage = ProjectsPage = rclass
                     </Row>
                     <Row>
                         <Col sm={12} style={marginTop:'1ex'}>
-                            <VisibleMDLG>
-                                <div style={maxWidth:'50%', float:'right'}>
-                                    <UpgradeStatus />
-                                </div>
-                            </VisibleMDLG>
                             <NewProjectCreator
                                 start_in_edit_mode = {@project_list().length == 0}
                                 default_value={@props.search}

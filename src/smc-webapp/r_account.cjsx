@@ -596,16 +596,10 @@ AccountSettings = rclass
                 email_address_verified = {@props.email_address_verified}
                 ref                    = 'email_address_verified'
                 />
-            <NewsletterSetting
-                redux          = {@props.redux}
-                email_address  = {@props.email_address}
-                other_settings = {@props.other_settings}
-                />
             <PasswordSetting
                 ref   = 'password'
                 maxLength = {64}
                 />
-            <APIKeySetting />
             <Row style={marginTop: '15px', borderTop: '1px solid #ccc', paddingTop: '15px'}>
                 <Col xs={12}>
                     {@render_sign_out_buttons()}
