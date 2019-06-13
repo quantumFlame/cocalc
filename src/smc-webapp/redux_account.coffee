@@ -100,6 +100,7 @@ class AccountActions extends Actions
                    """
 
         @setState(signing_in: true)
+        console.log(store.get('signing_in'))
         webapp_client.guest_sign_in
             remember_me   : true
             timeout       : 30

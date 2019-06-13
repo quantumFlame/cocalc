@@ -952,16 +952,12 @@ class exports.Connection extends EventEmitter
 
         mesg = message.is_public_project
                 project_id    : opts.project_id
-
-        console.log('start to call mesg_is_public_Project', mesg, opts.timeout)
-        
+       
         @call
             allow_post : false
             message : mesg
             timeout : opts.timeout
-            cb      : (err, mesg) =>
-                console.log('client.is_public_project,', err, mesg)
-                opts.cb(err, mesg)    
+            cb      : opts.cb
 
             
     delete_remember_me_cookie: (cb) =>
