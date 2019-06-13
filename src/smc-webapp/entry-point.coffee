@@ -41,6 +41,8 @@ desktop = require('./desktop_app')
 # but after app-framework and the basic app definition.
 {IS_MOBILE, isMobile} = require('./feature')
 
+console.log 'hello from entry-point -1'
+
 if IS_MOBILE and not isMobile.tablet()
     # Cell-phone version of site, with different
     # navigation system for selecting projects and files.

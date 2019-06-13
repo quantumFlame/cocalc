@@ -529,6 +529,14 @@ message({
   get_api_key: undefined
 }); // same as for create_account
 
+// client <--> hub
+message({
+  id: undefined,
+  event: "is_public_project",
+  project_id    : required,
+  is_public     : undefined
+});
+
 message({
   id: undefined,
   event: "sign_in_using_auth_token",

@@ -196,6 +196,11 @@ exports.AccountPage = rclass
 
     render: ->
         logged_in = @props.is_logged_in
+        {webapp_client} = require('./webapp_client')
+        console.log('connected?', webapp_client.is_connected()) 
+        if webapp_client.is_connected()
+            misc_page = require('./misc_page')
+            console.log('get_url_type', misc_page.get_url_type()) 
         <div style={overflow:'auto'}>
             <Grid className='constrained'>
                 {@render_landing_page() if not logged_in}

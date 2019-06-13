@@ -736,6 +736,19 @@ class exports.Client extends EventEmitter
             host     : @_opts.host
             port     : @_opts.port
 
+    mesg_is_public_project: (mesg) =>
+        hub_projects.is_public_project
+            project_id     : mesg.project_id
+            database       : @database
+            logger         : @logger
+            cb             : (err, is_public) =>
+                if err
+                    @error_to_client(id:mesg.id, error:err)
+                else 
+                    mesg.is_public = is_public
+                    @push_to_client(mesg)
+
+
     mesg_sign_in_using_auth_token: (mesg) =>
         sign_in.sign_in_using_auth_token
             client   : @

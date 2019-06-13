@@ -423,6 +423,22 @@ exports.extend_PostgreSQL = (ext) -> class PostgreSQL extends ext
             cb    : one_result(['email_address', 'password'], opts.cb) 
 
 
+    # return a guest account randomly
+    is_public_project: (opts) =>
+        opts = defaults opts,
+            project_id    : required
+            cb            : required    # cb(err, true if is_public_project; false if not is_public_project)
+        @_query
+            query : "SELECT projects_public.project_id FROM projects_public, projects"
+            where :
+                [
+                    'projects_public.project_id = projects.project_id', 
+                    'projects_public.project_id = $::UUID' : opts.project_id
+                ]
+            cb    : one_result 'project_id', (err, project_id) =>
+                opts.cb(err, project_id?)
+           
+            
     is_admin: (opts) =>
         opts = defaults opts,
             account_id : required
