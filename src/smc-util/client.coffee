@@ -944,8 +944,24 @@ class exports.Connection extends EventEmitter
             cb      : opts.cb        
 
             
-    is_public_project: (project_id) ->      
-        project_id
+    is_public_project: (opts) ->
+        opts = defaults opts,
+            project_id    : required
+            cb            : required
+            timeout       : 40
+
+        mesg = message.is_public_project
+                project_id    : opts.project_id
+
+        console.log('start to call mesg_is_public_Project', mesg, opts.timeout)
+        
+        @call
+            allow_post : false
+            message : mesg
+            timeout : opts.timeout
+            cb      : (err, mesg) =>
+                console.log('client.is_public_project,', err, mesg)
+                opts.cb(err, mesg)    
 
             
     delete_remember_me_cookie: (cb) =>

@@ -1959,6 +1959,35 @@ exports.is_app_page = ->
     else
         return false
     
+exports.sign_in_if_public_proj = ->
+    url_type = 'others'
+    href = window.location.href
+    str_1 = href.slice(exports.BASE_URL.length + 1)
+    if str_1 == 'app'
+        url_type = 'app'
+    else if str_1.substr(0, 13) == 'app#projects/'
+        url_type = 'project'
+        parts = str_1.substr(13).split('/')
+        
+        console.log('use is_public_project')
+        {webapp_client} = require('./webapp_client')                
+        webapp_client.is_public_project
+            project_id    : parts[0]
+            timeout       : 30
+            cb            : (error, mesg) =>
+                if error
+                    console.log('error in misc_page.is_public_project', error)
+                    return false
+                if mesg.is_public
+                    console.log('misc_page.is_public_project is_public')
+                    {actions} = require('./landing-page/util')
+                    actions("account").guest_sign_in()
+                    return 'public_project'
+                else
+                    console.log('misc_page.is_public_project not_public')
+                    return false
+    
+    return url_type
 
 exports.get_url_type = ->
     {webapp_client} = require('./webapp_client')
@@ -1972,7 +2001,8 @@ exports.get_url_type = ->
         url_type = 'project'
         parts = str_1.substr(13).split('/')
         console.log('use is_public_project')
-        url_type = webapp_client.is_public_project(parts[0])
+        is_public = await webapp_client.is_public_project(parts[0])
+        console.log('await',  is_public)
     return url_type
 
 
