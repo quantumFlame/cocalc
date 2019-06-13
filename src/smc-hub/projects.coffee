@@ -24,6 +24,33 @@ exports.new_project = (project_id, database, compute_server) ->
         _project_cache[project_id] = P
     return P
 
+exports.is_public_project = (opts) ->
+    opts = defaults opts,
+        project_id     : required
+        database       : required
+        logger         : undefined
+        cb             : required
+    
+    if opts.logger?
+        dbg = (m) ->
+            opts.logger.debug("is_public_project: #{m}")
+        dbg()
+    else
+        dbg = ->
+
+    dbg("is_public_project start")
+    dbg(opts.project_id)
+        
+    opts.database.is_public_project
+        project_id : opts.project_id
+        cb         : (err, is_public) =>
+            if err
+                opts.cb(err)
+            else if is_public
+                opts.cb(undefined, true)
+            else
+                opts.cb(undefined, false)
+
 class Project
     constructor: (@project_id, @database, @compute_server) ->
         @dbg("instantiating Project class")

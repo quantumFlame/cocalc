@@ -943,6 +943,11 @@ class exports.Connection extends EventEmitter
             timeout : opts.timeout
             cb      : opts.cb        
 
+            
+    is_public_project: (project_id) ->      
+        project_id
+
+            
     delete_remember_me_cookie: (cb) =>
         # This actually sets the content of the cookie to empty.
         # (I just didn't implement a delete action on the backend yet.)

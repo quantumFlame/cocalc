@@ -268,7 +268,7 @@ exports.guest_sign_in = (opts) ->
                 cb       : cb
     ], opts.cb)
 
-
+        
 exports.sign_in_using_auth_token = (opts) ->
     {client, mesg} = opts = defaults opts,
         client   : required

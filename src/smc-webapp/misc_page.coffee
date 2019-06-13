@@ -28,6 +28,7 @@ buttonbar   = require('./buttonbar')
 markdown    = require('./markdown')
 theme       = require('smc-util/theme')
 
+
 get_inspect_dialog = (editor) ->
     dialog = $('''
     <div class="webapp-codemirror-introspect modal"
@@ -1948,6 +1949,32 @@ exports.get_query_params = ->
 
 exports.get_query_param = (p) ->
     return exports.get_query_params()[p]
+
+exports.is_app_page = ->    
+    url_type = 'others'
+    href = window.location.href
+    str_1 = href.slice(exports.BASE_URL.length + 1)
+    if str_1 == 'app'
+        return true
+    else
+        return false
+    
+
+exports.get_url_type = ->
+    {webapp_client} = require('./webapp_client')
+    
+    url_type = 'others'
+    href = window.location.href
+    str_1 = href.slice(exports.BASE_URL.length + 1)
+    if str_1 == 'app'
+        url_type = 'app'
+    else if str_1.substr(0, 13) == 'app#projects/'
+        url_type = 'project'
+        parts = str_1.substr(13).split('/')
+        console.log('use is_public_project')
+        url_type = webapp_client.is_public_project(parts[0])
+    return url_type
+
 
 # returns true, if a target page should be loaded
 exports.should_load_target_url = ->
