@@ -55,10 +55,13 @@ class AccountActions extends Actions
 
     set_user_type: (user_type) =>
         @setState
-            user_type    : user_type
-            is_logged_in : user_type == 'signed_in'
+            user_type          : user_type
+            is_logged_in       : user_type == 'signed_in'            
 
     sign_in: (email, password) =>
+        if store.get('signing_in') == true
+            return
+        
         doc_conn = '[connectivity debugging tips](https://doc.cocalc.com/howto/connectivity-issues.html)'
         err_help = """
                    Please reload this browser tab and try again.
@@ -93,14 +96,16 @@ class AccountActions extends Actions
                         @setState(sign_in_error : "The server responded with invalid message when signing in: #{JSON.stringify(mesg)}")
 
     guest_sign_in: =>
+        if store.get('signing_in') == true
+            return
+        
         doc_conn = '[connectivity debugging tips](https://doc.cocalc.com/howto/connectivity-issues.html)'
         err_help = """
                    Please reload this browser tab and try again.
                    If that doesn't work after a few minutes, try these #{doc_conn} or email #{help()}.
                    """
-
+        
         @setState(signing_in: true)
-        console.log(store.get('signing_in'))
         webapp_client.guest_sign_in
             remember_me   : true
             timeout       : 30
@@ -124,27 +129,6 @@ class AccountActions extends Actions
                         # should never ever happen
                         @setState(sign_in_error : "The server responded with invalid message when signing in: #{JSON.stringify(mesg)}")
 
-
-    is_public_project: (project_id) =>
-        doc_conn = '[connectivity debugging tips](https://doc.cocalc.com/howto/connectivity-issues.html)'
-        err_help = """
-                   Please reload this browser tab and try again.
-                   If that doesn't work after a few minutes, try these #{doc_conn} or email #{help()}.
-                   """
-
-        webapp_client.is_public_project
-            project_id    : project_id
-            timeout       : 30
-            cb            : (error, mesg) =>
-                if error
-                    console.log('error in redux_account.is_public_project', error)
-                    return false
-                if mesg.is_public
-                    console.log('redux_account.is_public_project is_public')
-                    return true
-                else
-                    return false
-                        
                         
     create_account: (first_name, last_name, email, password, token, usage_intent) =>
         @setState(signing_up: true)

@@ -1969,7 +1969,6 @@ exports.sign_in_if_public_proj = ->
         url_type = 'project'
         parts = str_1.substr(13).split('/')
         
-        console.log('use is_public_project')
         {webapp_client} = require('./webapp_client')                
         webapp_client.is_public_project
             project_id    : parts[0]
@@ -1979,14 +1978,8 @@ exports.sign_in_if_public_proj = ->
                     console.log('error in misc_page.is_public_project', error)
                     return 
                 if mesg.is_public
-                    console.log('misc_page.is_public_project is_public')
                     {actions} = require('./landing-page/util')
-                    console.log('start to guest sign in ')
                     actions("account").guest_sign_in()
-                    return 
-                else
-                    console.log('misc_page.is_public_project not_public')
-                    return 
     
     return url_type
 

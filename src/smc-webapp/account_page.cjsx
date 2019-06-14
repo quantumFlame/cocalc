@@ -196,9 +196,10 @@ exports.AccountPage = rclass
 
     render: ->
         logged_in = @props.is_logged_in
-        if not logged_in
+        is_guest = @props.groups.includes('guest')
+        is_signing_in = @props.signing_in
+        if (not logged_in) and (not is_signing_in)
             {webapp_client} = require('./webapp_client')
-            console.log('connected?', webapp_client.is_connected()) 
             if webapp_client.is_connected()
                 misc_page = require('./misc_page')
                 misc_page.sign_in_if_public_proj()
