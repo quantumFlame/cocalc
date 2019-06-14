@@ -161,7 +161,7 @@ Page = rclass
             icon           = {a}
             actions        = {@actions('page')}
             active_top_tab = {@props.active_top_tab}
-            on_click       = {=>window.open('app', '_blank')}
+            on_click       = {=>@actions('account').sign_out(false)}
             show_label     = {@state.show_label}
         />
 
@@ -226,6 +226,7 @@ Page = rclass
 
     render_right_nav: ->
         logged_in = @props.is_logged_in
+        is_guest = @props.groups.includes('guest')
         <Nav id='smc-right-tabs-fixed' style={height:"#{NAV_HEIGHT}px", lineHeight:'20px', margin:'0', overflowY:'hidden'}>
             {@render_admin_tab() if logged_in and @props.groups?.includes('admin')}
             {@render_sign_in_tab() if not logged_in}
@@ -241,7 +242,8 @@ Page = rclass
             />
             <NavItem className='divider-vertical hidden-xs' />
             {@render_support()}
-            {@render_account_tab() if logged_in}
+            {@render_account_tab() if (logged_in and not is_guest)}
+            {@render_guest_account_tab() if (logged_in and is_guest)}
             {@render_bell()}
             <ConnectionIndicator actions={@actions('page')} />
         </Nav>
